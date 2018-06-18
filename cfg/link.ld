@@ -1,4 +1,4 @@
-ENTRY(_start)
+ENTRY(start32)
 SECTIONS
 {
 	HIDDEN(KERNEL_LMA = 0x0000000000100000);
@@ -6,24 +6,25 @@ SECTIONS
 
 	. = KERNEL_LMA;
 
-	.rodata_multiboot_header ALIGN(4K) :
+	.rodata_nopg ALIGN(4K) :
 	{
-		KEEP(bld/multiboot_header.o(.rodata))
+                KEEP(bld/multiboot_header.o(.rodata))
+		KEEP(bld/start32.o(.rodata))
 	}
 
-	.text_boot ALIGN(4K) :
+	.data_nopg ALIGN(4K) :
 	{
-		KEEP(bld/boot.o(.text))
+		KEEP(bld/start32.o(.data))
 	}
 
-	.data_boot ALIGN(4K) :
+	.bss_nopg ALIGN(4K) :
 	{
-		KEEP(bld/boot.o(.data))
+		KEEP(bld/start32.o(.bss))
 	}
 
-	.rodata_boot ALIGN(4K) :
+	.text_nopg ALIGN(4K) :
 	{
-		KEEP(bld/boot.o(.rodata))
+		KEEP(bld/start32.o(.text))
 	}
 
 	. += KERNEL_VMA;

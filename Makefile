@@ -3,9 +3,11 @@ C = cfg
 S = src
 
 OBJS = \
-	$(B)/boot.o \
 	$(B)/kernel.o \
-	$(B)/multiboot_header.o
+	$(B)/multiboot_header.o \
+	$(B)/stack.o \
+	$(B)/start32.o \
+	$(B)/start64.o
 
 include make/env.mk
 include make/iso.mk
