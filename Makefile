@@ -4,7 +4,7 @@ S = src
 
 OBJS = \
 	$(B)/kernel.o \
-	$(B)/multiboot_header.o \
+	$(B)/multiboot2.o \
 	$(B)/stack.o \
 	$(B)/start32.o \
 	$(B)/start64.o

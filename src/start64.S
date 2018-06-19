@@ -1,5 +1,6 @@
         .text
         .global start64
+        .type   start64, @function
 start64:
         // Set the stack.
         mov     $kernel_stack_start, %rsp
@@ -12,3 +13,5 @@ start64:
 	call	kernel_main
         cli
         hlt
+
+        .size start64, . - start64

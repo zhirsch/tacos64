@@ -9,6 +9,7 @@ CFLAGS = \
 	-Werror \
 	-Wextra \
 	-ffreestanding \
+	-fno-asynchronous-unwind-tables \
 	-mcmodel=large \
 	-mno-mmx \
 	-mno-red-zone \

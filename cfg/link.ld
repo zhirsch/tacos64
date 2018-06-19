@@ -1,31 +1,35 @@
+KERNEL_LMA = 0x0000000000100000;
+KERNEL_VMA = 0xffffffff80000000;
+
 ENTRY(start32)
 SECTIONS
 {
-	HIDDEN(KERNEL_LMA = 0x0000000000100000);
-	HIDDEN(KERNEL_VMA = 0xffffffff80000000);
-
 	. = KERNEL_LMA;
 
-	.rodata_nopg ALIGN(4K) :
-	{
-                KEEP(bld/multiboot_header.o(.rodata))
-		KEEP(bld/start32.o(.rodata))
-	}
+        .rodata.multiboot2 ALIGN(4K) :
+        {
+                KEEP(*(.multiboot2))
+        }
 
-	.data_nopg ALIGN(4K) :
-	{
-		KEEP(bld/start32.o(.data))
-	}
+        .text.init ALIGN(4K) :
+        {
+                *(.text.init)
+        }
 
-	.bss_nopg ALIGN(4K) :
-	{
-		KEEP(bld/start32.o(.bss))
-	}
+        .rodata.init ALIGN(4K) :
+        {
+                *(.rodata.init)
+        }
 
-	.text_nopg ALIGN(4K) :
-	{
-		KEEP(bld/start32.o(.text))
-	}
+        .data.init ALIGN(4K) :
+        {
+                *(.data.init)
+        }
+
+        .bss.init ALIGN(4K) :
+        {
+                *(.bss.init)
+        }
 
 	. += KERNEL_VMA;
 
@@ -36,12 +40,7 @@ SECTIONS
 
 	.rodata ALIGN(4K) : AT(ADDR(.rodata) - KERNEL_VMA)
 	{
-		*(.rodata*)
-	}
-
-	.eh_frame ALIGN(4K) : AT(ADDR(.eh_frame) - KERNEL_VMA)
-	{
-		KEEP(*(.eh_frame))
+		*(.rodata)
 	}
 
 	.data ALIGN(4K) : AT(ADDR(.data) - KERNEL_VMA)
@@ -53,10 +52,5 @@ SECTIONS
 	{
 		*(.bss)
 		*(COMMON)
-	}
-
-	/DISCARD/ :
-	{
-		*(.comment)
 	}
 }

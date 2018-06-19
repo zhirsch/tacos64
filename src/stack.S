@@ -1,4 +1,4 @@
-        .bss
+        .section .bss.init, "aw", @nobits
         .align  0x1000
 kernel_stack_end:
         .skip   0x4000

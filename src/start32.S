@@ -1,4 +1,4 @@
-	.section	.text
+	.section .text.init, "ax"
 	.code32
 
 	.macro set_page_entry addr, flags, table, offset
@@ -20,6 +20,7 @@
 	.endm
 
 	.global	start32
+        .type   start32, @function
 start32:
 
 	// Initialize paging.
@@ -65,12 +66,13 @@ start32:
 	ljmpl	$0x8, $1f
 1:      jmp     start64
 
-	.section .bss
+        .size start32, . - start32
+
+
+	.section .bss.init, "aw", @nobits
 	// Define the PML4T as all zeros, i.e. nothing mapped.
 kernel_pml4t:
 	.skip	512 * 8
-
-	// Make room for the initial identity mapping of the first 2 MiB.
 .Lpdpt:
 	.skip	512 * 8
 .Lpd:
@@ -85,7 +87,7 @@ kernel_pml4t:
 	.skip	512 * 8
 
 
-	.section .rodata
+	.section .rodata.init, "", @progbits
 .Lgdt:
 	// null
 	.word	0xffff
