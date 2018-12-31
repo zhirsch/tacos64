@@ -53,4 +53,11 @@ SECTIONS
 		*(.bss)
 		*(COMMON)
 	}
+
+	/DISCARD/ :
+	{
+		KEEP(*(.eh_frame*))
+		KEEP(*(.note*))
+		KEEP(*(.comment*))
+	}
 }
