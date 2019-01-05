@@ -57,6 +57,7 @@ env = env.Clone(
 # Compile.
 objects = env.Object([
     'kernel.c',
+    'kprintf.c',
     'multiboot2.S',
     'stack.S',
     'start32.S',
