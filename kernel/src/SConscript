@@ -25,7 +25,6 @@ env = env.Clone(
         '-m64',
         '-mcmodel=kernel',
         '-mno-red-zone',
-        '-pedantic',
         '-std=c11',
     ],
     ASPPFLAGS = [
