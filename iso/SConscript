@@ -1,0 +1,21 @@
+# -*- mode: python -*-
+Import(['env', 'kernel'])
+
+# Create a bootable ISO image
+iso = env.ISO(
+    target = 'tacos64.iso',
+    source = [
+        'root/boot/grub/grub.cfg',
+        'root/boot/tacos64',
+    ],
+    ROOT = env.Dir('root'),
+)[0]
+
+def CopyFile(target, source):
+    return env.Command(target, source, Copy('$TARGET', '$SOURCE'))
+
+CopyFile(env.File('root/boot/grub/grub.cfg'), env.File('#iso/root/boot/grub/grub.cfg'))
+CopyFile(env.File('root/boot/tacos64'), kernel)
+
+env.Alias('tacos64-iso', iso)
+Return(['iso'])

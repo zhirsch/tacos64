@@ -1,0 +1,70 @@
+# -*- mode: python -*-
+Import('env')
+
+# Create the SCons environment.
+env = env.Clone(
+    CC = 'gcc',
+    CCFLAGS = [
+        '-O$OPTLEVEL',
+        '-Wall',
+        '-Wdeclaration-after-statement',
+        '-Werror',
+        '-Wextra',
+        '-Wstack-usage=512',
+        '-fdata-sections',
+        '-ffreestanding',
+        '-ffunction-sections',
+        '-fno-common',
+        '-fno-delete-null-pointer-checks',
+        '-fno-exceptions',
+        '-fno-omit-frame-pointer',
+        '-fno-pie',
+        '-fstack-usage',
+        '-g3',
+        '-gdwarf',
+        '-m64',
+        '-mcmodel=kernel',
+        '-mno-red-zone',
+        '-pedantic',
+        '-std=c11',
+    ],
+    ASPPFLAGS = [
+        '-DASM_FILE',
+        '-O$OPTLEVEL',
+        '-g3',
+        '-gdwarf',
+    ],
+    LINKFLAGS = [
+        '-T$LDSCRIPT',
+        '-Wl,--fatal-warnings',
+        '-Wl,--gc-sections',
+        '-Wl,--print-gc-sections',
+        '-Wl,-z,defs',
+        '-Wl,-z,max-page-size=4096',
+        '-ffreestanding',
+        '-nostdlib',
+        '-static',
+    ],
+    CPPPATH = [
+        '#bld/$T/kernel/include',
+    ],
+    LDSCRIPT = env.File('#kernel/ld/link.ld'),
+    OPTLEVEL = {
+        'debug': '0',
+    }.get(env['T'], '2'),
+)
+
+# Compile.
+objects = env.Object([
+    'kernel.c',
+    'multiboot2.S',
+    'stack.S',
+    'start32.S',
+    'start64.S',
+])
+
+# Link.
+kernel = env.Program('tacos64', objects)
+env.Depends(kernel, '$LDSCRIPT')
+
+Return(['kernel'])
