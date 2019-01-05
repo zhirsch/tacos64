@@ -16,12 +16,16 @@
 1:	mov	%ebx, (%edi)
 	add	$0x1000, %ebx
 	add	$8, %edi
-	loop 1b
+	loop	1b
 	.endm
 
 	.global	start32
         .type   start32, @function
 start32:
+	// Preserve the multiboot2 values provided by the boot loader.
+        mov     $kernel_stack_start, %esp
+	push	%eax
+	push	%ebx
 
 	// Initialize paging.
 
@@ -60,6 +64,10 @@ start32:
 	mov	%cr0, %eax
 	or	$1 << 31, %eax
 	mov	%eax, %cr0
+
+	// Reload the multiboot2 values.
+	pop	%ebx
+	pop	%eax
 
 	// Set the 64-bit GDT (leave 32-bit compat mode).
 	lgdt	(.Lgdtp)

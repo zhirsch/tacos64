@@ -58,6 +58,7 @@ env = env.Clone(
 objects = env.Object([
     'kernel.c',
     'multiboot2.S',
+    'portio.c',
     'stack.S',
     'start32.S',
     'start64.S',

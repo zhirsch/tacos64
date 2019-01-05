@@ -9,8 +9,10 @@ start64:
         push    $0
         popf
 
-	// Jump to the C entry point.
-	call	kernel_main
+        // Jump to the C entry point, passing the multiboot info.
+        mov	%rax, %rdi
+        mov	%rbx, %rsi
+        call	kernel_main
         cli
         hlt
 
