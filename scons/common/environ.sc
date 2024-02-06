@@ -14,7 +14,7 @@ if env["COLOR"]:
 # Create a builder for creating an ISO.
 iso_builder = Builder(action=Action('$ISOCOM', '$ISOCOMSTR'))
 env.Append(BUILDERS={'ISO': iso_builder})
-env['ISOCOM'] = 'grub-mkrescue -o $TARGET $ROOT > /dev/null 2>&1'
+env['ISOCOM'] = 'grub2-mkrescue -o $TARGET $ROOT > /dev/null 2>&1'
 env['ISOCOMSTR'] = '$ISOCOM'
 
 # Create a builder for sed
