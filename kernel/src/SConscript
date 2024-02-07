@@ -21,7 +21,6 @@ env = env.Clone(
         '-fstack-usage',
         '-g3',
         '-gdwarf',
-        '-m64',
         '-mcmodel=kernel',
         '-mno-red-zone',
         '-pedantic',
@@ -62,6 +61,7 @@ objects = env.Object([
     'start32.S',
     'start64.S',
 ])
+objects += env.Object('snprintf.c', CFLAGS='-Wno-implicit-fallthrough')
 
 # Link.
 kernel = env.Program('tacos64', objects)
