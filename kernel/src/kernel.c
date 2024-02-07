@@ -1,5 +1,8 @@
+#include <screen.h>
+
 void kernel_main(void) {
   volatile char* video = (volatile char*)0xB8000;
+  screen_clear();
   video[0] = 'T';
   video[1] = 0x1f;
   video[2] = 'a';
