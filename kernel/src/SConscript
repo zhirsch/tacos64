@@ -3,7 +3,6 @@ Import('env')
 
 # Create the SCons environment.
 env = env.Clone(
-    CC = 'gcc',
     CCFLAGS = [
         '-O$OPTLEVEL',
         '-Wall',

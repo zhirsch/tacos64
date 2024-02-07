@@ -1,11 +1,30 @@
 # -*- mode: python -*-
 # Create the allowed options
 
-opts = Variables('custom.py')
+opts = Variables(File('#custom.py').abspath)
 opts.AddVariables(
-    BoolVariable('V', 'echo the build commands', False),
-    ListVariable('T', 'the build variant type', 'debug,release', ['debug', 'release']),
-    BoolVariable('COLOR', 'show compiler output in color', True),
+    BoolVariable(
+        'V',
+        help='echo the build commands',
+        default=False,
+    ),
+    ListVariable(
+        'T',
+        help='the build variant type',
+        default='debug,release',
+        names=['debug', 'release'],
+    ),
+    BoolVariable(
+        'COLOR',
+        help='show compiler output in color',
+        default=True,
+    ),
+    PathVariable(
+        'CC',
+        help='the c compiler to use',
+        default='x86_64-elf-gcc',
+        validator=PathVariable.PathAccept,
+    ),
 )
 
 Return('opts')
