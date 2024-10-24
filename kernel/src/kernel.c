@@ -1,21 +1,22 @@
+#include "cpu/apic.h"
+#include "cpu/idt.h"
+#include "cpu/tss.h"
+#include "string/snprintf.h"
+#include "terminal/terminal.h"
+
 void kernel_main(void) {
-  volatile char* video = (volatile char*)0xB8000;
-  video[0] = 'T';
-  video[1] = 0x1f;
-  video[2] = 'a';
-  video[3] = 0x1f;
-  video[4] = 'c';
-  video[5] = 0x1f;
-  video[6] = 'O';
-  video[7] = 0x1f;
-  video[8] = 'S';
-  video[9] = 0x1f;
-  video[10] = '6';
-  video[11] = 0x1f;
-  video[12] = '4';
-  video[13] = 0x1f;
-  while (1) {
-    __asm__ ("cli; hlt");
-  }
-  // TODO
+  clear_screen();
+  kprintf("Welcome to TacOS64!\n");
+
+  kprintf("Initializing the tss\n");
+  tss_initialize();
+
+  kprintf("Initializing the apic\n");
+  apic_initialize();
+
+  kprintf("Initializing the idt\n");
+  idt_initialize();
+
+  kprintf("Enabling interrupts\n");
+  __asm__("sti");
 }

@@ -7,7 +7,7 @@ import SCons
 Import('opts')
 
 # Create common build environment
-env = Environment(options=opts)
+env = Environment(options=opts, ENV=os.environ.copy())
 if env["COLOR"]:
     env.Append(CFLAGS=["-fdiagnostics-color"])
 

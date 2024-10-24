@@ -3,11 +3,10 @@ Import('env')
 
 # Create the SCons environment.
 env = env.Clone(
-    CC = 'gcc',
+    CC = 'x86_64-elf-gcc',
     CCFLAGS = [
         '-O$OPTLEVEL',
         '-Wall',
-        '-Wdeclaration-after-statement',
         '-Werror',
         '-Wextra',
         '-Wstack-usage=512',
@@ -25,8 +24,6 @@ env = env.Clone(
         '-m64',
         '-mcmodel=kernel',
         '-mno-red-zone',
-        '-pedantic',
-        '-std=c11',
     ],
     ASPPFLAGS = [
         '-DASM_FILE',
@@ -56,11 +53,18 @@ env = env.Clone(
 
 # Compile.
 objects = env.Object([
+    'asm/boot.S',
+    'asm/multiboot2.S',
+    'cpu/apic.c',
+    'cpu/asm/idt.S',
+    'cpu/asm/isr.S',
+    'cpu/asm/tss.S',
+    'cpu/gdt.c',
+    'cpu/idt.c',
+    'cpu/tss.c',
     'kernel.c',
-    'multiboot2.S',
-    'stack.S',
-    'start32.S',
-    'start64.S',
+    'string/snprintf.c',
+    'terminal/terminal.c',
 ])
 
 # Link.
