@@ -55,6 +55,7 @@ env = env.Clone(
 objects = env.Object([
     'asm/boot.S',
     'asm/boot64.S',
+    'asm/halt.S',
     'asm/multiboot2.S',
     'cpu/apic.c',
     'cpu/asm/idt.S',
@@ -64,7 +65,9 @@ objects = env.Object([
     'cpu/idt.c',
     'cpu/tss.c',
     'kernel.c',
+    'logging/panic.c',
     'string/snprintf.c',
+    'string/strncmp.c',
     'terminal/terminal.c',
 ])
 
