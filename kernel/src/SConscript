@@ -53,10 +53,10 @@ env = env.Clone(
 
 # Compile.
 objects = env.Object([
-    'asm/boot.S',
-    'asm/boot64.S',
     'asm/halt.S',
     'asm/multiboot2.S',
+    'asm/start32.S',
+    'asm/start64.S',
     'cpu/apic.c',
     'cpu/asm/idt.S',
     'cpu/asm/isr.S',
