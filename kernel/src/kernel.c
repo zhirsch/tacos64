@@ -4,7 +4,7 @@
 #include "cpu/apic.h"
 #include "cpu/idt.h"
 #include "cpu/tss.h"
-#include "multiboot2/multiboot2.h"
+#include "multiboot/multiboot2.h"
 #include "string/snprintf.h"
 #include "string/strncmp.h"
 #include "terminal/terminal.h"
