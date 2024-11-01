@@ -3,6 +3,7 @@ KERNEL_VMA = 0xffffffff80000000;
 
 ENTRY(start32)
 OUTPUT_FORMAT(elf64-x86-64)
+
 SECTIONS
 {
 	. = KERNEL_LMA;
@@ -35,7 +36,7 @@ SECTIONS
 		*(.text*)
 	}
 
-	.rodata ALIGN(4K) : AT(ADDR(.rodata) - KERNEL_VMA)
+	.rodata ALIGN(4K) (READONLY) : AT(ADDR(.rodata) - KERNEL_VMA)
 	{
 		*(.rodata*)
 	}
